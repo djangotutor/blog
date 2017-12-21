@@ -12,4 +12,4 @@ class Category(models.Model):
 		self.save()
 
 	def __str__(self):
-		self.name
+		return self.name
