@@ -3,5 +3,5 @@ from .models import Category
 
 class PostList(ListView):
 	template_name = 'blog/post_list.html'
-	queryset = Category.objects.filter(private_state=False)
+	queryset = Category.objects.filter(private_state=False).order_by('order')
 	context_object_name = 'categorys'
