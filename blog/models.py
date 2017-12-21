@@ -4,7 +4,7 @@ from django.db import models
 
 class Category(models.Model):
 	name = models.CharField(max_length=100)
-	order = models.IntegerField()
+	order = models.PositiveSmallIntegerField()
 	private_state = models.BooleanField(default=False)
 
 	def private(self):
