@@ -10,28 +10,31 @@
 	</head>
 	<body>
 		<div class="page-header">
+			<a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
 			<h1><a href="/">Learning Djanog Blog</a></h1>
 		</div>
 
 		<div class="content container">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav ">
-					{% if category_name is None %}
-						<li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-					{% else %}
-						<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-					{% endif %}
-					{% for category in categorys %}
-						{% if category_name == category.name %}
-							<li class="nav-item"><a class="nav-link active" href="{% url 'posts_by_category' category.name %}">{{ category }}</a></li>
+			{% if categorys is not None %}
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav ">
+						{% if category_name is None %}
+							<li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
 						{% else %}
-							<li class="nav-item"><a class="nav-link" href="{% url 'posts_by_category' category.name %}">{{ category }}</a></li>
+							<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
 						{% endif %}
-					{% endfor %}
-					</ul>
-				</div>
-			</nav>
+						{% for category in categorys %}
+							{% if category_name == category.name %}
+								<li class="nav-item"><a class="nav-link active" href="{% url 'posts_by_category' category.name %}">{{ category }}</a></li>
+							{% else %}
+								<li class="nav-item"><a class="nav-link" href="{% url 'posts_by_category' category.name %}">{{ category }}</a></li>
+							{% endif %}
+						{% endfor %}
+						</ul>
+					</div>
+				</nav>
+			{% endif %}
 
 			<div class="row">
 				<div class="col-md-8">
