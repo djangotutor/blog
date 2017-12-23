@@ -8,4 +8,6 @@ urlpatterns = [
 	url(r'^post/new/$', views.PostNew.as_view(), name='post_new'),
 	url(r'^post/(?P<pk>\d+)/edit/$', views.PostEdit.as_view(), name='post_edit'),
 	url(r'^drafts/$', views.PostDraftList.as_view(), name='post_draft_list'),
+	url(r'^post/(?P<pk>\d+)/publish/$', views.PostPublish.as_view(), name='post_publish'),
+	url(r'^post/(?P<pk>\d+)/remove/$', views.PostRemove.as_view(), name='post_remove'),
 ]

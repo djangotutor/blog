@@ -1,0 +1,9 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	<h1>포스트 삭제</h1>
+	<form method="POST" class="post-form">{% csrf_token %}
+		<p>"{{ object }}" 포스트를 삭제하시겠습니까?</p>
+		<button type="submit" value="Confirm" class="save btn btn-default" />포스트 삭제</button>
+	</form>
+{% endblock %}
