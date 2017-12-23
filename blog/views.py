@@ -52,7 +52,6 @@ class PostNew(CreateView):
 	def form_valid(self, form):
 		post = form.save(commit=False)
 		post.author = self.request.user
-		post.published_date = timezone.now()
 		return super().form_valid(form)
 
 class PostEdit(UpdateView):
@@ -63,5 +62,4 @@ class PostEdit(UpdateView):
 	def form_valid(self, form):
 		post = form.save(commit=False)
 		post.author = self.request.user
-		post.published_date = timezone.now()
 		return super().form_valid(form)
