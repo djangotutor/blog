@@ -2,6 +2,7 @@ from django.utils import timezone
 from django.views.generic import ListView
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from .models import Category
@@ -44,6 +45,17 @@ class PostDetail(DetailView):
 		return context
 
 class PostNew(CreateView):
+	model = Post
+	fields = ['category', 'title', 'text']
+	template_name = 'blog/post_edit.html'
+
+	def form_valid(self, form):
+		post = form.save(commit=False)
+		post.author = self.request.user
+		post.published_date = timezone.now()
+		return super().form_valid(form)
+
+class PostEdit(UpdateView):
 	model = Post
 	fields = ['category', 'title', 'text']
 	template_name = 'blog/post_edit.html'
