@@ -63,3 +63,13 @@ class PostEdit(UpdateView):
 		post = form.save(commit=False)
 		post.author = self.request.user
 		return super().form_valid(form)
+
+class PostDraftList(ListView):
+	template_name = 'blog/post_draft_list.html'
+	context_object_name = 'posts'
+	queryset = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['categorys'] = Category.objects.filter(private_state=False).order_by('order')
+		return context
