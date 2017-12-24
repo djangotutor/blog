@@ -107,3 +107,27 @@ class CommentAdd(CreateView):
 		comment = form.save(commit=False)
 		comment.post = get_object_or_404(Post, pk=self.kwargs['pk'])
 		return super().form_valid(form)
+
+@method_decorator(login_required, name='dispatch')
+class CommentApprove(RedirectView):
+	permanent = False
+	query_string = True
+	pattern_name = 'post_detail'
+
+	def get_redirect_url(self, *args, **kwargs):
+		comment = get_object_or_404(Comment, pk=kwargs['pk'])
+		comment.approve()
+		kwargs['pk'] = comment.post.pk
+		return super().get_redirect_url(*args, **kwargs)
+
+@method_decorator(login_required, name='dispatch')
+class CommentRemove(RedirectView):
+	permanent = False
+	query_string = True
+	pattern_name = 'post_detail'
+
+	def get_redirect_url(self, *args, **kwargs):
+		comment = get_object_or_404(Comment, pk=kwargs['pk'])
+		comment.delete()
+		kwargs['pk'] = comment.post.pk
+		return super().get_redirect_url(*args, **kwargs)
