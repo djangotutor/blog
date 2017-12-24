@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.utils import timezone
 from django.views.generic.base import RedirectView
 from django.views.generic import ListView
@@ -48,7 +49,7 @@ class PostDetail(DetailView):
 		context['category_name'] = Category.objects.filter(post__id=self.kwargs['pk'])[0].name
 		return context
 
-@login_required
+@method_decorator(login_required, name='dispatch')
 class PostNew(CreateView):
 	model = Post
 	fields = ['category', 'title', 'text']
@@ -59,7 +60,7 @@ class PostNew(CreateView):
 		post.author = self.request.user
 		return super().form_valid(form)
 
-@login_required
+@method_decorator(login_required, name='dispatch')
 class PostEdit(UpdateView):
 	model = Post
 	fields = ['category', 'title', 'text']
@@ -70,7 +71,7 @@ class PostEdit(UpdateView):
 		post.author = self.request.user
 		return super().form_valid(form)
 
-@login_required
+@method_decorator(login_required, name='dispatch')
 class PostDraftList(ListView):
 	template_name = 'blog/post_draft_list.html'
 	context_object_name = 'posts'
@@ -81,7 +82,7 @@ class PostDraftList(ListView):
 		context['categorys'] = Category.objects.filter(private_state=False).order_by('order')
 		return context
 
-@login_required
+@method_decorator(login_required, name='dispatch')
 class PostPublish(RedirectView):
 	permanent = False
 	query_string = True
@@ -92,7 +93,7 @@ class PostPublish(RedirectView):
 		post.publish()
 		return super().get_redirect_url(*args, **kwargs)
 
-@login_required
+@method_decorator(login_required, name='dispatch')
 class PostRemove(DeleteView):
 	model = Post
 	success_url = reverse_lazy('home')
