@@ -12,6 +12,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from .models import Category
 from .models import Post
+from .models import Comment
 from .forms import PostForm
 
 class Categorys(ListView):
@@ -97,3 +98,12 @@ class PostPublish(RedirectView):
 class PostRemove(DeleteView):
 	model = Post
 	success_url = reverse_lazy('home')
+
+class CommentAdd(CreateView):
+	model = Comment
+	fields = ['author', 'text']
+
+	def form_valid(self, form):
+		comment = form.save(commit=False)
+		comment.post = get_object_or_404(Post, pk=self.kwargs['pk'])
+		return super().form_valid(form)

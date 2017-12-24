@@ -10,4 +10,5 @@ urlpatterns = [
 	url(r'^drafts/$', views.PostDraftList.as_view(), name='post_draft_list'),
 	url(r'^post/(?P<pk>\d+)/publish/$', views.PostPublish.as_view(), name='post_publish'),
 	url(r'^post/(?P<pk>\d+)/remove/$', views.PostRemove.as_view(), name='post_remove'),
+	url(r'^post/(?P<pk>\d+)/comment/$', views.CommentAdd.as_view(), name='add_comment_to_post'),
 ]
